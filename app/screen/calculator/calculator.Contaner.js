@@ -1,9 +1,12 @@
 /*Import packages here */
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 /*Import packages here */
 
 /*Import project files here*/
 import CalculatorComponent from "./calculator.Component";
+import * as actions from '../../actions';
 /*Import project files here*/
 
 class Calculator extends Component {
@@ -35,6 +38,7 @@ class Calculator extends Component {
                 case '=':
                     lastNum = currentNum + inputs;
                     currentNum = eval(currentNum);
+                    this.props.saveResult(currentNum);
                     break;
             }
             this.setState({ currentNum, lastNum });
@@ -59,4 +63,17 @@ class Calculator extends Component {
     }
 }
 
-export default Calculator;
+function mapStateToProps(state) {
+    return {
+        result: state.result
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(
+        Object.assign({}, actions),
+        dispatch
+    );
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calculator);

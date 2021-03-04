@@ -4,12 +4,16 @@ import {
   SafeAreaView,
   StatusBar,
 } from 'react-native';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 /*Import packages here*/
 
 /*Import project files here*/
-import Calculator from './app/calculator/calculator.Contaner';
+import Calculator from './app/screen/calculator/calculator.Contaner';
+import reducer from './app/reducer';
 /*Import project files here*/
 
+const store = createStore(reducer);
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +24,9 @@ export default class App extends Component {
       <>
         <StatusBar />
         <SafeAreaView>
-          <Calculator />
+          <Provider store={store}>
+            <Calculator />
+          </Provider>
         </SafeAreaView>
       </>
     );
